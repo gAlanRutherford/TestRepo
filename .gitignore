@@ -1,0 +1,10 @@
+################################################
+## Project Specific
+################################################
+
+# User-specific files
+AnsibleAPI/AnsibleAPI/bin/
+AnsibleAPI/AnsibleAPI/obj/
+AnsibleAPI/packages/
+
+################################################
