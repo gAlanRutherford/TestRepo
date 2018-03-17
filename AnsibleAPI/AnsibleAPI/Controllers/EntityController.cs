@@ -20,27 +20,50 @@ namespace AnsibleAPI.Controllers
 
         [HttpGet]
         [Route("v1/entities/{entityId?}")]
-        public HttpResponseMessage GetEntity(int? entityId = null)
+        public IHttpActionResult GetEntity(int? entityId = null)
         {
-            var entities = _entityRepository.Entities;
-            HttpResponseMessage response;
             if (entityId != null)
             {
-                Entity entity = entities.FirstOrDefault(x => x.Id == entityId);
+                Entity entity = _entityRepository.GetEntiy(entityId.Value);
                 if (entity == null)
                 {
-                    response = Request.CreateErrorResponse(HttpStatusCode.NotFound, new ArgumentException("Entity Id does not exist"));
+                    return NotFound();
                 }
                 else
                 {
-                    response = Request.CreateResponse(HttpStatusCode.OK, entity);
+                    return Ok(entity);
                 }
             }
             else
             {
-                response = Request.CreateResponse(HttpStatusCode.OK, entities);
+                IEnumerable<Entity> entities = _entityRepository.GetEntities();
+                return Ok(entities);
             }
-            return response;
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("v1/entity")]
+        public IHttpActionResult AddEntity([FromBody] Entity entity)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid data");
+            }
+            _entityRepository.AddEntity(entity);
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("v1/entities")]
+        public IHttpActionResult AddEntities(IEnumerable<Entity> entities)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid data");
+            }
+            _entityRepository.AddEntities(entities);
+            return Ok();
         }
     }
 }

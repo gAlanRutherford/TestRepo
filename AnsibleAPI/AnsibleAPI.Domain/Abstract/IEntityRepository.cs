@@ -9,6 +9,9 @@ namespace AnsibleAPI.Domain.Abstract
 {
     public interface IEntityRepository
     {
-        IEnumerable<Entity> Entities { get; set; }
+        IEnumerable<Entity> GetEntities();
+        Entity GetEntiy(int entityId);
+        bool AddEntities(IEnumerable<Entity> entities);
+        bool AddEntity(Entity entity);
     }
 }

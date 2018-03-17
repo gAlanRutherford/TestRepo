@@ -13,7 +13,7 @@ namespace AnsibleAPI.Domain.Entities
             Id = id;
             Name = name;
         }
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string Name { get; set; }
     }
 }
