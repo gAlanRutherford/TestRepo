@@ -8,5 +8,8 @@ AnsibleAPI/AnsibleAPI/obj/
 AnsibleAPI/AnsibleAPI.Domain/bin/
 AnsibleAPI/AnsibleAPI.Domain/obj/
 AnsibleAPI/packages/
+AnsibleAPI/AnsibleAPI/Content
+AnsibleAPI/AnsibleAPI/Scripts
+AnsibleAPI/AnsibleAPI/fonts
 
 ################################################

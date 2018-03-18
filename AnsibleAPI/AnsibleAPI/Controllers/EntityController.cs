@@ -19,51 +19,50 @@ namespace AnsibleAPI.Controllers
         }
 
         [HttpGet]
-        [Route("v1/entities/{entityId?}")]
-        public IHttpActionResult GetEntity(int? entityId = null)
+        [Route("api/v1/entities")]
+        public IHttpActionResult GetEntities()
         {
-            if (entityId != null)
+            return Ok(_entityRepository.GetEntities());
+        }
+
+        [HttpGet]
+        [Route("api/v1/entities/{entityId}")]
+        public IHttpActionResult GetEntity(int entityId)
+        {
+            Entity entity = _entityRepository.GetEntiy(entityId);
+            if (entity == null)
             {
-                Entity entity = _entityRepository.GetEntiy(entityId.Value);
-                if (entity == null)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    return Ok(entity);
-                }
+                return NotFound();
             }
             else
             {
-                IEnumerable<Entity> entities = _entityRepository.GetEntities();
-                return Ok(entities);
+                return Ok(entity);
             }
-            return Ok();
         }
 
         [HttpPost]
-        [Route("v1/entity")]
+        [Route("api/v1/entity")]
         public IHttpActionResult AddEntity([FromBody] Entity entity)
         {
-            if (!ModelState.IsValid)
+            if (entity == null || string.IsNullOrWhiteSpace(entity.Name))
             {
                 return BadRequest("Invalid data");
             }
             _entityRepository.AddEntity(entity);
-            return Ok();
+            return Ok(entity);
         }
 
         [HttpPost]
-        [Route("v1/entities")]
+        [Route("api/v1/entities")]
         public IHttpActionResult AddEntities(IEnumerable<Entity> entities)
         {
-            if (!ModelState.IsValid)
+            if(entities == null || entities.Any(x => string.IsNullOrWhiteSpace(x.Name)))
             {
                 return BadRequest("Invalid data");
             }
+
             _entityRepository.AddEntities(entities);
-            return Ok();
+            return Ok(entities);
         }
     }
 }
