@@ -58,6 +58,10 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
     <script>
         var uri = 'api/v1/entities';
+        var currentUrl = window.location.href;
+        var urlSplit = currentUrl.split('/');
+
+        window.open(urlSplit[0] + '//' + urlSplit[2] + '/swagger')
         $(document).ready(function () {
             $.getJSON(uri)
                 .done(function (data) {
